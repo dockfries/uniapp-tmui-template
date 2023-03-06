@@ -3,25 +3,24 @@ import uni from "@dcloudio/vite-plugin-uni";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import tmuiCss from "./src/tmui/tool/vitePlugs/tmuiCss";
 import { resolve } from "path";
-// import Components from 'unplugin-vue-components/vite'
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
 
 export default defineConfig({
   resolve: {
-    alias: [
-      {
-        find: "@",
-        replacement: resolve(__dirname, "src"),
-      },
-    ],
-  },
-  server: {
-    proxy: {
-      // "/pag": {
-      //   target: "https://cdn.tmui.design",
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/api/, "/api"),
-      // },
+    alias: {
+      "@": resolve(__dirname, "src"),
     },
   },
-  plugins: [uni(), vueJsx(), tmuiCss() as PluginOption],
+  plugins: [
+    uni(),
+    vueJsx(),
+    tmuiCss() as PluginOption,
+    Components(),
+    AutoImport({
+      include: [/\.vue$/, /\.nvue$/],
+      imports: ["vue", "pinia", "uni-app"],
+      eslintrc: { enabled: true },
+    }),
+  ],
 });

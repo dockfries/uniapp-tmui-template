@@ -18,11 +18,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, nextTick } from "vue";
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
 import tmApp from "@/tmui/components/tm-app/tm-app.vue";
 import tmMessage from "@/tmui/components/tm-message/tm-message.vue";
-import { onLoad } from "@dcloudio/uni-app";
 
 const store = useTmpiniaStore();
 const app = ref<InstanceType<typeof tmApp> | null>(null);
