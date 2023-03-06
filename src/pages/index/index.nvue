@@ -1,0 +1,42 @@
+<template>
+  <tm-app ref="app">
+    <tm-navbar title="123456" :shadow="0" hide-home>
+      <template #left>
+        <view class="flex flex-center flex-row">
+          <tm-icon
+            name="tmicon-ios-sunny"
+            _class="px-24"
+            :color="store.tmStore.dark ? 'yellow' : ''"
+            :font-size="32"
+            @click="toggleDarkMode"
+          />
+        </view>
+      </template>
+    </tm-navbar>
+    <tm-message ref="msg" />
+  </tm-app>
+</template>
+
+<script lang="ts" setup>
+import { ref, nextTick } from "vue";
+import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
+import tmApp from "@/tmui/components/tm-app/tm-app.vue";
+import tmMessage from "@/tmui/components/tm-message/tm-message.vue";
+import { onLoad } from "@dcloudio/uni-app";
+
+const store = useTmpiniaStore();
+const app = ref<InstanceType<typeof tmApp> | null>(null);
+const msg = ref<InstanceType<typeof tmMessage> | null>(null);
+
+const toggleDarkMode = () => app.value?.setDark();
+
+onLoad(() => {
+  nextTick(() => {
+    msg.value?.show({
+      model: "error",
+      text: "不能为空",
+      mask: true,
+    });
+  });
+});
+</script>
