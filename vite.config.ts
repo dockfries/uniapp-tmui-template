@@ -18,7 +18,7 @@ export default defineConfig({
     tmuiCss() as PluginOption,
     Components(),
     AutoImport({
-      include: [/\.vue$/, /\.nvue$/],
+      include: [/\.n?vue$/],
       imports: ["vue", "pinia", "uni-app"],
       eslintrc: { enabled: true },
     }),
