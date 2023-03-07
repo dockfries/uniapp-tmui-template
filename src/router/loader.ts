@@ -19,6 +19,8 @@ const subPages =
 
 const allPages = [...mainPages, ...subPages.flat()];
 
+console.log(allPages);
+
 export const getPathByName = (name?: string) => {
   if (!name) return;
   const isInPage = allPages.find((p) => p.name === name)?.path;
@@ -31,8 +33,7 @@ export const getRouteByPath = (path?: string) => {
   return isInPage;
 };
 
-const tabBarPages =
-  (pagesJson as IPagesJson).tabBar?.list.map((t) => t.pagePath) || [];
+const tabBarPages = (pagesJson as IPagesJson).tabBar?.list.map((t) => t.pagePath) || [];
 
 export const isTabBarPage = (path?: string) => {
   if (!path) return;

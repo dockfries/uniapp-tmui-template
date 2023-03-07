@@ -9,9 +9,16 @@
     {
       "name": "index",
       "path": "pages/index/index",
+      "meta": {
+        "title": "首页"
+      },
       "style": {
         "navigationStyle": "custom"
       }
+    },
+    {
+      "name": "login",
+      "path": "pages/user/login"
     }
   ],
   "globalStyle": {
