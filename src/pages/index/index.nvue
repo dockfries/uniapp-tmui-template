@@ -21,12 +21,17 @@
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
 import tmApp from "@/tmui/components/tm-app/tm-app.vue";
 import tmMessage from "@/tmui/components/tm-message/tm-message.vue";
+import { request } from "@/request";
 
 const store = useTmpiniaStore();
 const app = ref<InstanceType<typeof tmApp> | null>(null);
 const msg = ref<InstanceType<typeof tmMessage> | null>(null);
 
 const toggleDarkMode = () => app.value?.setDark();
+
+request<string>("ping", "GET")
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
 
 onLoad(() => {
   nextTick(() => {

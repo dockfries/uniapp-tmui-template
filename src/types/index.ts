@@ -54,3 +54,15 @@ export interface IRouterGuard {
   afterEach?: (to: Partial<IPageOpts>, from: Partial<IPageOpts>) => void;
   instance: uniCrazyRouter;
 }
+
+export interface IReqConfig extends fetchConfig {
+  errModal?: boolean;
+}
+
+export interface ICommonResponse<T = Record<string, any>> {
+  code: number;
+  data?: T;
+  msg?: string;
+}
+
+export type mixinErrorResult = fetchConfigSuccessType & { errMsg: string };
