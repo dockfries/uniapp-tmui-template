@@ -3,16 +3,16 @@ import { ICrazyRoute } from "@/types";
 import { merge, pick } from "lodash-es";
 
 export const useRoute = () => {
-  const pageStack = getCurrentPages();
-  const {
-    route: path,
-    $routeParams,
-    $page: { options },
-  } = pageStack[pageStack.length - 1] as ICrazyRoute;
+  const pageStack: ICrazyRoute[] = getCurrentPages();
+  console.log(pageStack);
+  const { route: path, $routeParams } = pageStack[pageStack.length - 1];
+  // #ifdef MP
+  const { options } = pageStack[pageStack.length - 1];
+  // #endif
+  // #ifndef MP
+  const { options } = pageStack[pageStack.length - 1].$page;
+  // #endif
 
   const routeInfo = getRouteByPath(path) || {};
-  return merge(
-    { query: merge({}, options, $routeParams || {}) },
-    pick(routeInfo, pickItems)
-  );
+  return merge({ query: merge({}, options, $routeParams || {}) }, pick(routeInfo, pickItems));
 };

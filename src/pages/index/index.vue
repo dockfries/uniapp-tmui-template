@@ -1,5 +1,5 @@
 <template>
-  <tm-app ref="app">
+  <tm-app ref="app" :class="{ dark: store.tmStore.dark }">
     <tm-navbar :title="title" :shadow="0" hide-home>
       <template #left>
         <view class="_flex _flex-center _flex-row">
