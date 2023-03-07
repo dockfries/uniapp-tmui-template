@@ -3,6 +3,7 @@ import * as Pinia from "pinia";
 import { createPersistedState } from "pinia-plugin-persistedstate";
 import tmui from "./tmui";
 import App from "./App.vue";
+import router from "./router";
 
 export function createApp() {
   const app = createSSRApp(App);
@@ -13,5 +14,6 @@ export function createApp() {
   pinia.use(compatUniPinia);
   app.use(pinia);
   app.use(tmui);
+  app.use(router);
   return { app, Pinia };
 }

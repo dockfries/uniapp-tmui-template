@@ -7,6 +7,7 @@
   },
   "pages": [
     {
+      "name": "index",
       "path": "pages/index/index",
       "style": {
         "navigationStyle": "custom"
