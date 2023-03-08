@@ -1,4 +1,4 @@
-import { defineConfig, PluginOption } from "vite";
+import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 import tmuiCss from "./src/tmui/tool/vitePlugs/tmuiCss";
 import { resolve } from "path";
@@ -16,8 +16,8 @@ export default defineConfig({
   plugins: [
     uni(),
     h5ProdEffectPlugin(),
-    tmuiCss() as PluginOption,
-    UnoCSS("./unocss.config.ts"),
+    tmuiCss(),
+    UnoCSS(),
     Components(),
     AutoImport({
       include: [/\.n?vue$/, /\.ts$/],
