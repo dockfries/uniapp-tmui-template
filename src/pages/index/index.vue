@@ -1,5 +1,5 @@
 <template>
-  <app-container>
+  <app-container refresh loadmore>
     <tm-navbar :title="title" :shadow="0" hide-home>
       <template #left>
         <view class="_flex _flex-row">
