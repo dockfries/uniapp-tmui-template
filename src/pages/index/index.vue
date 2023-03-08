@@ -1,8 +1,8 @@
 <template>
-  <tm-app ref="app" :class="{ dark: store.tmStore.dark }">
+  <app-container>
     <tm-navbar :title="title" :shadow="0" hide-home>
       <template #left>
-        <view class="_flex _flex-center _flex-row">
+        <view class="_flex _flex-row">
           <tm-icon
             name="tmicon-ios-sunny"
             _class="px-24"
@@ -24,22 +24,21 @@
       </view>
     </view>
     <tm-message ref="msg" />
-  </tm-app>
+  </app-container>
 </template>
 
 <script lang="ts" setup>
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
-import tmApp from "@/tmui/components/tm-app/tm-app.vue";
 import tmMessage from "@/tmui/components/tm-message/tm-message.vue";
 import { request } from "@/request";
 import { useRoute } from "@/composable/router/useRoute";
 import { useRouter } from "@/composable/router/useRouter";
 
 const store = useTmpiniaStore();
-const app = ref<InstanceType<typeof tmApp> | null>(null);
+
 const msg = ref<InstanceType<typeof tmMessage> | null>(null);
 
-const toggleDarkMode = () => app.value?.setDark();
+const toggleDarkMode = () => store.setTmVuetifyDark(!store.tmStore.dark);
 
 const title: string = useRoute().meta?.title;
 

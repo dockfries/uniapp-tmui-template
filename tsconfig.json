@@ -22,5 +22,5 @@
     "auto-imports.d.ts",
     "components.d.ts"
   ],
-  "exclude": ["src/tmui/**/*.vue", "src/tmui/**/*.nvue", "node_modules"]
+  "exclude": ["src/tmui/**/*.vue", "src/tmui/**/*.nvue", "node_modules", "src/tmui/components.d.ts"]
 }

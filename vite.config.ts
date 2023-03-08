@@ -14,15 +14,16 @@ export default defineConfig({
     },
   },
   plugins: [
-    uni(),
-    h5ProdEffectPlugin(),
-    tmuiCss(),
-    UnoCSS(),
-    Components(),
+    // 自动导入相关插件必须在uni之前, 否则小程序端将失效
+    Components({ dirs: ["src/components", "src/tmui/components"] }),
     AutoImport({
       include: [/\.n?vue$/, /\.ts$/],
       imports: ["vue", "pinia", "uni-app"],
       eslintrc: { enabled: true },
     }),
+    uni(),
+    tmuiCss(),
+    UnoCSS(),
+    h5ProdEffectPlugin(),
   ],
 });

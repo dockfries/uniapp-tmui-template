@@ -3,3 +3,6 @@
 node_modules
 src/tmui/**
 src/hybrid/**
+dist
+auto-imports.d.ts
+components.d.ts
