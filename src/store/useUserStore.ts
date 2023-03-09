@@ -1,7 +1,7 @@
 export const useUserStore = defineStore(
   "user",
   () => {
-    const token = "";
+    const token = ref<string>("");
     return { token };
   },
   { persist: true }

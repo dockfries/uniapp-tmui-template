@@ -12,6 +12,7 @@
     >
       <slot />
     </d-scroll>
+    <app-provider />
   </tm-app>
 </template>
 <script setup lang="ts">

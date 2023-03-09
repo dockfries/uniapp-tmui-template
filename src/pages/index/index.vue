@@ -23,31 +23,24 @@
         <tm-button @click="showMessage">组件消息框</tm-button>
       </view>
     </view>
-    <tm-message ref="msg" />
   </app-container>
 </template>
 
 <script lang="ts" setup>
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
-import tmMessage from "@/tmui/components/tm-message/tm-message.vue";
 import { request } from "@/request";
 import { useRoute } from "@/composable/router/useRoute";
 import { useRouter } from "@/composable/router/useRouter";
+import { useMessage } from "@/composable/provider/useMessage";
 
 const store = useTmpiniaStore();
-
-const msg = ref<InstanceType<typeof tmMessage> | null>(null);
-
 const toggleDarkMode = () => store.setTmVuetifyDark(!store.tmStore.dark);
 
-const title: string = useRoute().meta?.title;
-
 const router = useRouter();
+const title: string = useRoute().meta?.title;
 const goLogin = () => router.push({ name: "login" });
 
-request<string>("ping", "GET")
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
+const msg = useMessage();
 
 const showMessage = () => {
   msg.value?.show({
@@ -56,4 +49,8 @@ const showMessage = () => {
     mask: true,
   });
 };
+
+request<string>("ping", "GET")
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
 </script>

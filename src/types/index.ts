@@ -1,4 +1,5 @@
 import uniCrazyRouter from "uni-crazy-router";
+import tmMessage from "@/tmui/components/tm-message/tm-message.vue";
 
 export interface ITabBar {
   list: ITabBarItem[];
@@ -46,11 +47,7 @@ export interface ICrazyRoute extends Page.PageInstance {
 }
 
 export interface IRouterGuard {
-  beforeEach?: (
-    to: Partial<IPageOpts>,
-    from: Partial<IPageOpts>,
-    next: () => void
-  ) => void;
+  beforeEach?: (to: Partial<IPageOpts>, from: Partial<IPageOpts>, next: () => void) => void;
   afterEach?: (to: Partial<IPageOpts>, from: Partial<IPageOpts>) => void;
   instance: uniCrazyRouter;
 }
@@ -66,3 +63,5 @@ export interface ICommonResponse<T = Record<string, any>> {
 }
 
 export type mixinErrorResult = fetchConfigSuccessType & { errMsg: string };
+
+export type AppMessageInstance = InstanceType<typeof tmMessage>;

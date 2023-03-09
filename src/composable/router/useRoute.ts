@@ -4,7 +4,6 @@ import { merge, pick } from "lodash-es";
 
 export const useRoute = () => {
   const pageStack: ICrazyRoute[] = getCurrentPages();
-  console.log(pageStack);
   const { route: path, $routeParams } = pageStack[pageStack.length - 1];
   // #ifdef MP
   const { options } = pageStack[pageStack.length - 1];

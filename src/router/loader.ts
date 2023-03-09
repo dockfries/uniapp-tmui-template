@@ -19,8 +19,6 @@ const subPages =
 
 const allPages = [...mainPages, ...subPages.flat()];
 
-console.log(allPages);
-
 export const getPathByName = (name?: string) => {
   if (!name) return;
   const isInPage = allPages.find((p) => p.name === name)?.path;
