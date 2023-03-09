@@ -5,21 +5,22 @@
       "path": "pages/index/index",
       "meta": {
         "title": "首页"
-      },
-      "style": {
-        "navigationStyle": "custom"
       }
     },
     {
       "name": "login",
-      "path": "pages/user/login"
+      "path": "pages/user/login",
+      "meta": {
+        "title": "登录"
+      }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-tmui-starter",
     "navigationBarBackgroundColor": "#FFFFFF",
-    "backgroundColor": "#FFFFFF"
+    "backgroundColor": "#FFFFFF",
+    "navigationStyle": "custom"
   },
   "condition": {
     "current": 0,

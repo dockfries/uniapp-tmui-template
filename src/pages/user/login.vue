@@ -1,5 +1,5 @@
 <template>
-  <tm-app>
+  <app-container>
     <view>登录</view>
-  </tm-app>
+  </app-container>
 </template>

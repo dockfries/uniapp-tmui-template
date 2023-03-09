@@ -1,18 +1,5 @@
 <template>
   <app-container refresh loadmore>
-    <tm-navbar :title="title" :shadow="0" hide-home>
-      <template #left>
-        <view class="_flex _flex-row">
-          <tm-icon
-            name="tmicon-ios-sunny"
-            _class="px-24"
-            :color="store.tmStore.dark ? 'yellow' : ''"
-            :font-size="32"
-            @click="toggleDarkMode"
-          />
-        </view>
-      </template>
-    </tm-navbar>
     <view class="_text-primary-500 _m-4">
       <view class="f-center">
         <view class="i-icon-chip _text-warning-500 _text-2xl _mr-1" />
@@ -27,21 +14,14 @@
 </template>
 
 <script lang="ts" setup>
-import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
 import { request } from "@/request";
-import { useRoute } from "@/composable/router/useRoute";
 import { useRouter } from "@/composable/router/useRouter";
 import { useMessage } from "@/composable/provider/useMessage";
 
-const store = useTmpiniaStore();
-const toggleDarkMode = () => store.setTmVuetifyDark(!store.tmStore.dark);
-
 const router = useRouter();
-const title: string = useRoute().meta?.title;
 const goLogin = () => router.push({ name: "login" });
 
 const msg = useMessage();
-
 const showMessage = () => {
   msg.value?.show({
     model: "error",

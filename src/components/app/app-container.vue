@@ -1,71 +1,34 @@
 <template>
   <tm-app :class="[{ dark: store.tmStore.dark }, '_relative']">
-    <d-scroll
-      :refresh-disabled="!props.refresh"
-      :loadmore-disabled="!props.loadmore"
-      :skip="requestInfo.skip"
-      :total="requestInfo.total"
-      class="!_absolute _w-full _h-full"
-      background="transparent"
-      refresher-background="transparent"
-      @fetch="onFetchData"
-    >
-      <slot />
-    </d-scroll>
+    <tm-navbar :title="pageTitle" :shadow="0" :hide-home="isHideHome">
+      <template #left>
+        <view class="_flex _flex-row">
+          <tm-icon
+            name="tmicon-ios-sunny"
+            _class="px-24"
+            :color="store.tmStore.dark ? 'yellow' : ''"
+            :font-size="32"
+            @click="toggleDarkMode"
+          />
+        </view>
+      </template>
+    </tm-navbar>
+    <slot />
     <app-provider />
   </tm-app>
 </template>
 <script setup lang="ts">
-import DScroll from "@dimple-smile/uni-scroll";
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
+import { useRoute } from "@/composable/router/useRoute";
+import { isTabBarPage } from "@/router/loader";
+
+const route = useRoute();
+
+const pageTitle: string = route.meta?.title;
+
+const isHideHome = isTabBarPage(route.path);
+
 const store = useTmpiniaStore();
 
-interface IAppContainerProps {
-  refresh?: boolean;
-  loadmore?: boolean;
-}
-
-const props = withDefaults(defineProps<IAppContainerProps>(), {
-  refresh: false,
-  loadmore: false,
-});
-
-interface IDScrollFetchEv {
-  skip: number;
-  limit: number;
-  total: number;
-  page: number;
-  loadmore: number;
-  stop: () => void;
-}
-
-interface IDScrollInfo {
-  skip: number;
-  total: number;
-  limit: number;
-  requestFn?: (...args: any) => Promise<any>;
-}
-
-const requestInfo = reactive<IDScrollInfo>({ skip: -1, total: -1, limit: 20 });
-
-const onFetchData = async (ev: IDScrollFetchEv) => {
-  if (!requestInfo.requestFn) return;
-  try {
-    const { data, total } = await requestInfo.requestFn();
-    // callback(data);
-    requestInfo.total = total;
-    if (requestInfo.skip === -1) requestInfo.skip = 0;
-    requestInfo.skip += requestInfo.limit;
-  } catch (err) {
-    // callback(err);
-  } finally {
-    ev.stop();
-  }
-};
-
-const setRequestFn = (fn: IDScrollInfo["requestFn"]) => (requestInfo.requestFn = fn);
-
-const exposed = { setRequestFn, ...toRefs(requestInfo) };
-
-defineExpose({ exposed });
+const toggleDarkMode = () => store.setTmVuetifyDark(!store.tmStore.dark);
 </script>
