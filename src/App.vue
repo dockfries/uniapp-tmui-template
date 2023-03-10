@@ -1,7 +1,9 @@
 <template>
-  <slot></slot>
+  <slot />
 </template>
 <style>
+@import "../assets/css/common.scss";
+
 /* #ifdef APP-PLUS-NVUE */
 @import "./tmui/scss/nvue.css";
 /* #endif */

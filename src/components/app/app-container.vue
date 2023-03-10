@@ -1,5 +1,5 @@
 <template>
-  <tm-app :class="[{ dark: store.tmStore.dark }, '_relative']">
+  <tm-app :class="[{ dark: store.tmStore.dark }, '_relative']" :dark-color="theme.black">
     <tm-navbar :title="pageTitle" :shadow="0" :hide-home="isHideHome">
       <template #left>
         <view class="_flex _flex-row">
@@ -20,13 +20,14 @@
 <script setup lang="ts">
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
 import { useRoute } from "@/composable/router/useRoute";
-import { isTabBarPage } from "@/router/loader";
+import { isTabBarPage, mainPages } from "@/router/loader";
+import { theme } from "@/theme";
 
 const route = useRoute();
 
 const pageTitle: string = route.meta?.title;
 
-const isHideHome = isTabBarPage(route.path);
+const isHideHome = isTabBarPage(route.path) || route.path === mainPages[0].path;
 
 const store = useTmpiniaStore();
 

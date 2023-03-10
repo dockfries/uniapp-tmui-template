@@ -1,6 +1,7 @@
 .DS_Store
 .eslintrc-auto-import.json
 .vscode
+.hbuilderx
 auto-imports.d.ts
 components.d.ts
 package-lock.json

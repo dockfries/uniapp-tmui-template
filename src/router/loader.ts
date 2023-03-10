@@ -10,14 +10,14 @@ const pickPages = (p: IPageOpts, root = "") => {
   return page;
 };
 
-const mainPages = (pagesJson as IPagesJson).pages.map((p) => pickPages(p));
+export const mainPages = (pagesJson as IPagesJson).pages.map((p) => pickPages(p));
 
-const subPages =
+export const subPages =
   (pagesJson as IPagesJson).subPackages?.map((s) => {
     return s.pages.map((p: IPageOpts) => pickPages(p, s.root));
   }) || [];
 
-const allPages = [...mainPages, ...subPages.flat()];
+export const allPages = [...mainPages, ...subPages.flat()];
 
 export const getPathByName = (name?: string) => {
   if (!name) return;

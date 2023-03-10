@@ -65,3 +65,15 @@ export interface ICommonResponse<T = Record<string, any>> {
 export type mixinErrorResult = fetchConfigSuccessType & { errMsg: string };
 
 export type AppMessageInstance = InstanceType<typeof tmMessage>;
+
+export interface IAppScrollConfig {
+  refresh?: boolean;
+  noMore?: boolean;
+  noData?: boolean;
+  error?: boolean;
+}
+
+export interface IAppScrollEvent {
+  loadmore: boolean;
+  stop: () => void;
+}
