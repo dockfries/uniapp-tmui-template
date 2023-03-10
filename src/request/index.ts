@@ -3,6 +3,7 @@ import { ICommonResponse, IReqConfig, mixinErrorResult } from "@/types";
 import { merge } from "lodash-es";
 
 const requestInterceptors = (config: IReqConfig) => {
+  if (!config) return true;
   const { token } = useUserStore();
   if (token) {
     if (!config.header) config.header = {};
@@ -11,10 +12,7 @@ const requestInterceptors = (config: IReqConfig) => {
   return true;
 };
 
-const responseInterceptors = (
-  result: fetchConfigSuccessType,
-  config: IReqConfig
-) => {
+const responseInterceptors = (result: fetchConfigSuccessType, config: IReqConfig) => {
   const data = result.data as ICommonResponse;
   if (data.code === 0) return data.data;
   if (data.code === -1) {
@@ -58,8 +56,7 @@ export const request = <T = unknown>(
       .request(
         defaultConfig,
         requestInterceptors,
-        (result: fetchConfigSuccessType) =>
-          responseInterceptors(result, defaultConfig),
+        (result: fetchConfigSuccessType) => responseInterceptors(result, defaultConfig),
         (result: mixinErrorResult) => {
           if (result.statusCode !== 200) {
             return errorInterceptors(result, defaultConfig);
@@ -74,34 +71,18 @@ export const request = <T = unknown>(
   });
 };
 
-export const get = <T = unknown>(
-  url: string,
-  data: object = {},
-  overrideConfig?: fetchConfig
-) => {
+export const get = <T = unknown>(url: string, data: object = {}, overrideConfig?: fetchConfig) => {
   return request<T>(url, "GET", data, overrideConfig);
 };
 
-export const post = <T = unknown>(
-  url: string,
-  data: object = {},
-  overrideConfig?: fetchConfig
-) => {
+export const post = <T = unknown>(url: string, data: object = {}, overrideConfig?: fetchConfig) => {
   return request<T>(url, "POST", data, overrideConfig);
 };
 
-export const put = <T = unknown>(
-  url: string,
-  data: object = {},
-  overrideConfig?: fetchConfig
-) => {
+export const put = <T = unknown>(url: string, data: object = {}, overrideConfig?: fetchConfig) => {
   return request<T>(url, "PUT", data, overrideConfig);
 };
 
-export const del = <T = unknown>(
-  url: string,
-  data: object = {},
-  overrideConfig?: fetchConfig
-) => {
+export const del = <T = unknown>(url: string, data: object = {}, overrideConfig?: fetchConfig) => {
   return request<T>(url, "DELETE", data, overrideConfig);
 };

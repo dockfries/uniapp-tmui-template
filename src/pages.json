@@ -1,34 +1,49 @@
 {
-  "pages": [
-    {
-      "name": "index",
-      "path": "pages/index/index",
-      "meta": {
-        "title": "首页"
-      }
-    },
-    {
-      "name": "login",
-      "path": "pages/user/login",
-      "meta": {
-        "title": "登录"
-      }
-    }
-  ],
   "globalStyle": {
+    "backgroundColor": "#FFFFFF",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-tmui-starter",
-    "navigationBarBackgroundColor": "#FFFFFF",
-    "backgroundColor": "#FFFFFF",
     "navigationStyle": "custom"
   },
-  "condition": {
-    "current": 0,
+  "pages": [
+    {
+      "meta": {
+        "title": "首页"
+      },
+      "name": "index",
+      "path": "pages/tabbar/index"
+    },
+    {
+      "meta": {
+        "title": "我的"
+      },
+      "name": "my",
+      "path": "pages/tabbar/my"
+    }
+  ],
+  "subPackages": [
+    {
+      "pages": [
+        {
+          "meta": {
+            "title": "登录"
+          },
+          "name": "login",
+          "path": "login"
+        }
+      ],
+      "root": "pages/user"
+    }
+  ],
+  "tabBar": {
+    "custom": true,
     "list": [
       {
-        "name": "",
-        "path": "",
-        "query": ""
+        "pagePath": "pages/tabbar/index"
+      },
+      {
+        "pagePath": "pages/tabbar/my"
       }
     ]
   }

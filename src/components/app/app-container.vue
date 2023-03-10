@@ -1,6 +1,11 @@
 <template>
   <tm-app :class="[{ dark: store.tmStore.dark }, '_relative']" :dark-color="theme.black">
-    <tm-navbar :title="pageTitle" :shadow="0" :hide-home="isHideHome">
+    <tm-navbar
+      :title="pageTitle"
+      :shadow="0"
+      :hide-home="isHideHome"
+      :home-path="mainPages[0].path"
+    >
       <template #left>
         <view class="_flex _flex-row">
           <tm-icon
@@ -14,6 +19,7 @@
       </template>
     </tm-navbar>
     <slot />
+    <app-tabbar />
     <app-provider />
   </tm-app>
 </template>

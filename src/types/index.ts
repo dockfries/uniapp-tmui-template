@@ -8,7 +8,6 @@ export interface ITabBar {
 
 export interface ITabBarItem {
   pagePath: string;
-  text: string;
   [k: string]: any;
 }
 
@@ -76,4 +75,23 @@ export interface IAppScrollConfig {
 export interface IAppScrollEvent {
   loadmore: boolean;
   stop: () => void;
+}
+
+export interface IResponsePagedData<T = any> {
+  data: T;
+  total: number;
+}
+
+export interface IUseListOpts {
+  page?: number;
+  size?: number;
+  immediate?: boolean;
+  reset?: boolean;
+  onError?: (err: unknown) => void;
+  onSuccess?: () => void;
+}
+
+export interface IRequestPageParams {
+  size: number;
+  page: number;
 }

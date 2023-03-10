@@ -4,4 +4,5 @@ export const theme = {
   error: "#E73F3F",
   success: "#01A63E",
   black: "#222124",
+  white: "#ffffff",
 };

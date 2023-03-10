@@ -31,7 +31,7 @@ export const getRouteByPath = (path?: string) => {
   return isInPage;
 };
 
-const tabBarPages = (pagesJson as IPagesJson).tabBar?.list.map((t) => t.pagePath) || [];
+export const tabBarPages = (pagesJson as IPagesJson).tabBar?.list.map((t) => t.pagePath) || [];
 
 export const isTabBarPage = (path?: string) => {
   if (!path) return;

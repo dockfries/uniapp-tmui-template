@@ -1,21 +1,4 @@
-export interface IResponsePagedData<T = any> {
-  data: T;
-  total: number;
-}
-
-export interface IUseListOpts {
-  page?: number;
-  size?: number;
-  immediate?: boolean;
-  reset?: boolean;
-  onError?: (err: unknown) => void;
-  onSuccess?: () => void;
-}
-
-export interface IRequestPageParams {
-  size: number;
-  page: number;
-}
+import { IRequestPageParams, IResponsePagedData, IUseListOpts } from "@/types";
 
 export const useList = <T extends (reqArg: IRequestPageParams) => Promise<IResponsePagedData>>(
   requestFn: T,
