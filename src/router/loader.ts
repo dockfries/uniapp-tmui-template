@@ -1,12 +1,12 @@
-import pagesJson from "@/pages.json";
-import { IPageOpts, IPagesJson } from "@/types";
 import { pick } from "lodash-es";
+import pagesJson from "@/pages.json";
+import type { IPageOpts, IPagesJson } from "@/types";
 
 export const pickItems = ["name", "path", "meta"];
 
 const pickPages = (p: IPageOpts, root = "") => {
   const page = pick(p, pickItems);
-  if (root && page.path) page.path = root + "/" + page.path;
+  if (root && page.path) page.path = `${root}/${page.path}`;
   return page;
 };
 

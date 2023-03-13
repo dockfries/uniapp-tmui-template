@@ -1,5 +1,5 @@
-import uniCrazyRouter from "uni-crazy-router";
-import tmMessage from "@/tmui/components/tm-message/tm-message.vue";
+import type uniCrazyRouter from "uni-crazy-router";
+import type tmMessage from "@/tmui/components/tm-message/tm-message.vue";
 
 export interface ITabBar {
   list: ITabBarItem[];
@@ -43,6 +43,7 @@ export interface ICrazyRoute extends Page.PageInstance {
     options?: Record<string, unknown>;
     [k: string]: any;
   };
+  options?: Record<string, unknown>;
 }
 
 export interface IRouterGuard {
@@ -94,4 +95,15 @@ export interface IUseListOpts {
 export interface IRequestPageParams {
   size: number;
   page: number;
+}
+
+export interface IAppTabBarItem {
+  icon: string;
+  activeIcon?: string;
+  text: string;
+  route: string;
+  iconClass?: string;
+  iconActiveClass?: string;
+  textClass?: string;
+  textActiveClass?: string;
 }

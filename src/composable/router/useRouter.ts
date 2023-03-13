@@ -1,4 +1,4 @@
-import { IPushReplaceOpts } from "@/types";
+import type { IPushReplaceOpts } from "@/types";
 import { getPathByName, isTabBarPage } from "@/router/loader";
 
 const routerFns = {
@@ -9,12 +9,11 @@ const routerFns = {
       throw err;
     };
     if (isTabBarPage(getPath)) {
-      console.log(getPath);
-      uni.switchTab({ url: "/" + getPath, fail });
+      uni.switchTab({ url: `/${getPath}`, fail });
       return;
     }
     const params = {
-      url: "/" + getPath,
+      url: `/${getPath}`,
       routeParams: opts.query ?? {},
       fail,
     };

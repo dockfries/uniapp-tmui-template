@@ -1,4 +1,4 @@
-import { IRequestPageParams, IResponsePagedData, IUseListOpts } from "@/types";
+import type { IRequestPageParams, IResponsePagedData, IUseListOpts } from "@/types";
 
 export const useList = <T extends (reqArg: IRequestPageParams) => Promise<IResponsePagedData>>(
   requestFn: T,

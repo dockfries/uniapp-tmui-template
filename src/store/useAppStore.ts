@@ -1,4 +1,4 @@
-import { AppMessageInstance } from "@/types";
+import type { AppMessageInstance } from "@/types";
 
 interface IAppProviders {
   messageInstance?: Ref<AppMessageInstance | null>;

@@ -1,36 +1,15 @@
-<template>
-  <app-container>
-    <view class="_m-4">
-      <view class="f-center">
-        <view class="i-icon-chip _text-warning-500 _text-2xl _mr-1" />
-        <text class="_text-xl _text-primary-500">兼容组件库所以类名前缀_</text>
-      </view>
-      <view class="_flex _gap-4 _mt-4 _p-4 _shadow _bg-white _rounded-md dark:_bg-dark-100">
-        <tm-button @click="goLogin">跳转</tm-button>
-        <tm-button @click="showMessage">组件消息框</tm-button>
-      </view>
-    </view>
-    <app-scroll :config="scrollConfig" @down="down" @up="down">
-      <view class="dark:_text-light-900">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. A nulla quasi, repudiandae illo
-        nihil, harum error voluptas maxime quia aliquid placeat? Recusandae eos, ducimus sapiente
-        harum aliquam et labore molestias.
-      </view>
-    </app-scroll>
-  </app-container>
-</template>
-
 <script lang="ts" setup>
 import { request } from "@/request";
 import { useRouter } from "@/composable/router/useRouter";
 import { useMessage } from "@/composable/provider/useMessage";
-import { IAppScrollConfig, IAppScrollEvent } from "@/types";
+import type { IAppScrollConfig, IAppScrollEvent } from "@/types";
 
 const router = useRouter();
 const goLogin = () => router.push({ name: "login" });
 
 const msg = useMessage();
 const showMessage = () => {
+  msg.value?.hide();
   msg.value?.show({
     model: "error",
     text: "不能为空",
@@ -51,3 +30,25 @@ const down = async (ev: IAppScrollEvent) => {
   }
 };
 </script>
+
+<template>
+  <AppContainer>
+    <view class="_m-4">
+      <view class="f-center">
+        <view class="i-icon-chip _text-warning-500 _text-2xl _mr-1" />
+        <text class="_text-xl _text-primary-500">兼容组件库所以类名前缀_</text>
+      </view>
+      <view class="_flex _gap-4 _mt-4 _p-4 _shadow _bg-white _rounded-md dark:_bg-dark-100">
+        <TmButton @click="goLogin">跳转</TmButton>
+        <TmButton @click="showMessage">组件消息框</TmButton>
+      </view>
+    </view>
+    <AppScroll :config="scrollConfig" @down="down" @up="down">
+      <view class="dark:_text-light-900">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. A nulla quasi, repudiandae illo
+        nihil, harum error voluptas maxime quia aliquid placeat? Recusandae eos, ducimus sapiente
+        harum aliquam et labore molestias.
+      </view>
+    </AppScroll>
+  </AppContainer>
+</template>

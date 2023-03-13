@@ -1,6 +1,7 @@
 <template>
   <slot />
 </template>
+
 <style>
 @import "../assets/css/common.scss";
 

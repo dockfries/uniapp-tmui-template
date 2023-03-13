@@ -1,11 +1,11 @@
-import { defineConfig } from "vite";
+import { resolve } from "node:path";
 import uni from "@dcloudio/vite-plugin-uni";
-import tmuiCss from "./src/tmui/tool/vitePlugs/tmuiCss";
-import { resolve } from "path";
+import { defineConfig } from "vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import h5ProdEffectPlugin from "uni-vite-plugin-h5-prod-effect";
 import UnoCSS from "unocss/vite";
+import tmuiCss from "./src/tmui/tool/vitePlugs/tmuiCss";
 
 export default defineConfig({
   resolve: {

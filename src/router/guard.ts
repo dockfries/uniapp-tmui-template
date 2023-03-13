@@ -1,7 +1,7 @@
-import { getRouteByPath } from "./loader";
 import uniCrazyRouter from "uni-crazy-router";
-import { IRouterGuard } from "@/types";
 import { merge } from "lodash-es";
+import { getRouteByPath } from "./loader";
+import type { IRouterGuard } from "@/types";
 
 const router: IRouterGuard = {
   instance: uniCrazyRouter,

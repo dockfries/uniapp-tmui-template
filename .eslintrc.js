@@ -4,23 +4,16 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    "./.eslintrc-auto-import.json",
-    "eslint:recommended",
-    "plugin:vue/vue3-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-  ],
-  parser: "vue-eslint-parser",
-  parserOptions: {
-    parser: "@typescript-eslint/parser",
-    ecmaVersion: "latest",
-    sourceType: "module",
-  },
-  plugins: ["vue", "@typescript-eslint", "prettier"],
+  extends: ["./.eslintrc-auto-import.json", "@antfu/eslint-config", "plugin:prettier/recommended"],
+  plugins: ["prettier"],
   rules: {
-    "vue/multi-word-component-names": "off",
+    "antfu/if-newline": "off",
     "vue/comment-directive": "off",
+    "vue/component-name-in-template-casing": [
+      "error",
+      "PascalCase",
+      { registeredComponentsOnly: false },
+    ],
   },
   globals: { uni: true },
 };

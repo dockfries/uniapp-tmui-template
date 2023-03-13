@@ -7,7 +7,7 @@ import { FileSystemIconLoader } from "@iconify/utils/lib/loader/node-loaders";
 import { theme } from "./src/theme/index"; // 兼容tmui组件库的color属性
 
 export default defineConfig({
-  include: /\.n?vue$/,
+  include: [/\.n?vue$/, "./src/pages.json"],
   exclude: ["node_modules", ".git", ".husky", ".vscode", "build", "dist", "public", "src/types"],
   presets: [
     presetWeapp({ prefix: "_", whRpx: false }),

@@ -1,6 +1,6 @@
-import { useUserStore } from "@/store/useUserStore";
-import { ICommonResponse, IReqConfig, mixinErrorResult } from "@/types";
 import { merge } from "lodash-es";
+import { useUserStore } from "@/store/useUserStore";
+import type { ICommonResponse, IReqConfig, mixinErrorResult } from "@/types";
 
 const requestInterceptors = (config: IReqConfig) => {
   if (!config) return true;
@@ -44,7 +44,7 @@ export const request = <T = unknown>(
   overrideConfig?: IReqConfig
 ) => {
   const defaultConfig: IReqConfig = {
-    url: import.meta.env.VITE_GLOB_API_URL + "/" + url,
+    url: `${import.meta.env.VITE_GLOB_API_URL}/${url}`,
     method,
     data,
     timeout: 15 * 1000,
