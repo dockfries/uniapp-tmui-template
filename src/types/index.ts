@@ -107,3 +107,10 @@ export interface IAppTabBarItem {
   textClass?: string;
   textActiveClass?: string;
 }
+
+export interface IAppTabBarConfig {
+  _class?: string;
+  background?: string;
+  darkBackground?: string;
+  list?: IAppTabBarItem[];
+}

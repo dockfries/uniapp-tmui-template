@@ -2,31 +2,28 @@
 import { useRoute } from "@/composable/router/useRoute";
 import { useRouter } from "@/composable/router/useRouter";
 import { mainPages, tabBarPages } from "@/router/loader";
-import type { IAppTabBarItem } from "@/types";
-
-withDefaults(defineProps<IAppTabBarProps>(), {
-  list: () => {
-    return (
-      mainPages
-        .filter((p) => p.path && tabBarPages.includes(p.path))
-        .map((t): IAppTabBarItem => {
-          return {
-            icon: t.meta?.icon,
-            text: t.meta?.title,
-            route: t.path || "",
-          };
-        }) || []
-    );
-  },
-});
+import type { IAppTabBarConfig, IAppTabBarItem } from "@/types";
 
 interface IAppTabBarProps {
-  // eslint-disable-next-line vue/prop-name-casing
-  _class?: string;
-  background?: string;
-  darkBackground?: string;
-  list?: IAppTabBarItem[];
+  config?: IAppTabBarConfig;
 }
+
+withDefaults(defineProps<IAppTabBarProps>(), {
+  config: () => {
+    return {
+      list:
+        mainPages
+          .filter((p) => p.path && tabBarPages.includes(p.path))
+          .map((t): IAppTabBarItem => {
+            return {
+              icon: t.meta?.icon,
+              text: t.meta?.title,
+              route: t.path || "",
+            };
+          }) || [],
+    };
+  },
+});
 
 const route = useRoute();
 const router = useRouter();
@@ -50,15 +47,15 @@ onMounted(() => {
 
 <template>
   <view
-    class="_bg-white dark:_bg-dark-100 _fixed _left-0 _right-0 _bottom-0 _flex _p-2 _z-100 shadow-sm dark:shadow-none app-tabbar"
+    class="_bg-white dark:_bg-dark-100 _fixed _left-0 _right-0 _bottom-0 _flex _p-2 _z-100 _shadow dark:_shadow-none app-tabbar"
     :class="[
-      background ? `_bg-${background}` : '',
-      darkBackground ? `dark:_bg-${darkBackground}` : '',
-      _class,
+      config.background ? `_bg-${config.background}` : '',
+      config.darkBackground ? `dark:_bg-${config.darkBackground}` : '',
+      config._class,
     ]"
   >
     <view
-      v-for="item in list"
+      v-for="item in config.list"
       :key="item.route"
       class="_flex _flex-col _justify-center _items-center _flex-1"
       :class="[`${isActive(item) ? '_text-primary-500 dark:_text-white' : '_text-#636263'}`]"
@@ -88,5 +85,5 @@ onMounted(() => {
       >
     </view>
   </view>
-  <view :style="{ height: `${patchHeight}px` }"></view>
+  <view :style="{ height: `${patchHeight}px` }" />
 </template>

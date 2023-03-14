@@ -4,7 +4,12 @@ import type { AppMessageInstance } from "@/types";
 
 const appStore = useAppStore();
 const msg = ref<AppMessageInstance | null>(null);
-onMounted(() => (appStore.providers.messageInstance = msg.value));
+
+onShow(() => {
+  nextTick(() => {
+    appStore.providers.messageInstance = msg.value;
+  });
+});
 </script>
 
 <template>

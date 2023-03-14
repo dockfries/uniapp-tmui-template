@@ -2,7 +2,10 @@
 import { request } from "@/request";
 import { useRouter } from "@/composable/router/useRouter";
 import { useMessage } from "@/composable/provider/useMessage";
+import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
 import type { IAppScrollConfig, IAppScrollEvent } from "@/types";
+
+const store = useTmpiniaStore();
 
 const router = useRouter();
 const goLogin = () => router.push({ name: "login" });
@@ -42,6 +45,11 @@ const down = async (ev: IAppScrollEvent) => {
         <TmButton @click="goLogin">跳转</TmButton>
         <TmButton @click="showMessage">组件消息框</TmButton>
       </view>
+      <TmCell :margin="[0, 40]" title="深色模式">
+        <template #right>
+          <TmSwitch v-model="store.tmStore.dark" />
+        </template>
+      </TmCell>
     </view>
     <AppScroll :config="scrollConfig" @down="down" @up="down">
       <view class="dark:_text-light-900">
