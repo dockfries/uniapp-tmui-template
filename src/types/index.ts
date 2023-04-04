@@ -1,5 +1,6 @@
 import type uniCrazyRouter from "uni-crazy-router";
 import type tmMessage from "@/tmui/components/tm-message/tm-message.vue";
+import type { fetchConfig } from "@/tmui/tool/lib/interface";
 
 export interface ITabBar {
   list: ITabBarItem[];

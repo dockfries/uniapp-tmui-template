@@ -4,7 +4,7 @@ import presetWeapp from "unocss-preset-weapp";
 import { transformerClass } from "unocss-preset-weapp/transformer";
 import presetIcons from "@unocss/preset-icons";
 import { FileSystemIconLoader } from "@iconify/utils/lib/loader/node-loaders";
-import { theme } from "./src/theme/index"; // 兼容tmui组件库的color属性
+import { tmConfig } from "./src/config/index"; // 兼容tmui组件库的color属性
 
 export default defineConfig({
   include: [/\.n?vue$/, "./src/pages.json"],
@@ -26,23 +26,24 @@ export default defineConfig({
   theme: {
     colors: {
       primary: {
-        500: theme.primary,
+        500: tmConfig.theme.primary,
         50: "#EBF1FD",
       },
       success: {
-        500: theme.success,
+        500: tmConfig.theme.success,
         50: "#E8F6ED",
       },
       warning: {
-        500: theme.warning,
+        500: tmConfig.theme.warning,
         50: "#FFF0D8",
       },
       error: {
-        500: theme.error,
+        500: tmConfig.theme.error,
       },
       gray: {
-        900: theme.black,
+        900: tmConfig.theme.black,
         800: "#5F5F61",
+        600: "#4B5563",
       },
     },
   },

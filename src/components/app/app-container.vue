@@ -2,7 +2,7 @@
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
 import { useRoute } from "@/composable/router/useRoute";
 import { isTabBarPage, mainPages } from "@/router/loader";
-import { theme } from "@/theme";
+import { tmConfig } from "@/config";
 import type { IAppTabBarConfig } from "@/types";
 import { useRouter } from "@/composable/router/useRouter";
 
@@ -12,12 +12,14 @@ interface IAppNavBarConfig {
 
 interface IAppContainerProps {
   config?: {
+    color?: string;
+    darkColor?: string;
     nav?: IAppNavBarConfig;
     tab?: IAppTabBarConfig;
   };
 }
 
-defineProps<IAppContainerProps>();
+const props = defineProps<IAppContainerProps>();
 
 const route = useRoute();
 const router = useRouter();
@@ -28,10 +30,16 @@ const pageTitle: string = route.meta?.title;
 const isHomePage = isTabBarPage(route.path) || route.path === mainPages[0].path;
 const pageStackLength = getCurrentPages().length;
 const goHome = () => router.push({ path: mainPages[0].path });
+const darkColor = props.config?.darkColor ?? (tmConfig.theme as Record<string, string>).black;
 </script>
 
 <template>
-  <TmApp class="_relative" :class="[{ dark: store.tmStore.dark }]" :dark-color="theme.black">
+  <TmApp
+    class="_relative"
+    :class="[{ dark: store.tmStore.dark }]"
+    :color="config?.color"
+    :dark-color="darkColor"
+  >
     <TmNavbar :title="config?.nav?.title || pageTitle" hide-home hide-back>
       <template #left>
         <view class="_flex _items-center _px-2">

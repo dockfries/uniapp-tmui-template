@@ -1,6 +1,11 @@
 import { merge } from "lodash-es";
 import { useUserStore } from "@/store/useUserStore";
 import type { ICommonResponse, IReqConfig, mixinErrorResult } from "@/types";
+import type {
+  fetchConfig,
+  fetchConfigMethod,
+  fetchConfigSuccessType,
+} from "@/tmui/tool/lib/interface";
 
 const requestInterceptors = (config: IReqConfig) => {
   if (!config) return true;
