@@ -1,10 +1,6 @@
-import type { AppMessageInstance } from "@/types";
-
-interface IAppProviders {
-  messageInstance?: Ref<AppMessageInstance | null>;
-}
+import type { IAppProviders } from "@/types";
 
 export const useAppStore = defineStore("app", () => {
-  const providers = reactive<IAppProviders>({});
+  const providers = reactive<IAppProviders>({ message: {}, modal: {} });
   return { providers };
 });
