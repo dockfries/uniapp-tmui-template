@@ -6,6 +6,7 @@ import type {
   fetchConfigMethod,
   fetchConfigSuccessType,
 } from "@/tmui/tool/lib/interface";
+import { useModal } from "@/composable/provider";
 
 const requestInterceptors = (config: IReqConfig) => {
   if (!config) return true;
@@ -25,21 +26,21 @@ const responseInterceptors = (result: fetchConfigSuccessType, config: IReqConfig
     return;
   }
   if (!config.errModal) return;
-  uni.showModal({
+
+  useModal({
     title: "请求异常",
     content: `${data.msg}\n${config.url}`,
-    showCancel: false,
-  });
+    hideCancel: true,
+  }).value?.open();
 };
 
 const errorInterceptors = (result: mixinErrorResult, config: IReqConfig) => {
-  if (config.errModal) {
-    uni.showModal({
-      title: "请求异常",
-      content: `${result.statusCode} ${result.errMsg}\n${config.url}`,
-      showCancel: false,
-    });
-  }
+  if (!config.errModal) return;
+  useModal({
+    title: "请求异常",
+    content: `${result.statusCode} ${result.errMsg}\n${config.url}`,
+    hideCancel: true,
+  }).value?.open();
 };
 
 export const request = <T = unknown>(

@@ -19,9 +19,7 @@ export interface IPushReplaceOpts {
   query?: Record<string, unknown>;
 }
 
-export interface IPageOpts {
-  path: string;
-  name?: string;
+export interface IPageOpts extends IPushReplaceOpts {
   meta?: Record<string, any>;
   style?: Record<string, any>;
 }
@@ -153,4 +151,20 @@ export interface IAppProviders {
     instance?: Ref<AppModalInstance | null>;
     setConfig?: (props: IModalProps) => void;
   };
+}
+
+export interface IRouterStruct {
+  push(opts: IPushReplaceOpts, isReplace?: boolean): void;
+  replace(opts: IPushReplaceOpts): void;
+  back(): void;
+  beforeEach: (fn: IInnerRoute["beforeEach"]) => void;
+  afterEach: (fn: IInnerRoute["afterEach"]) => void;
+}
+
+export interface IInnerRoute {
+  from: IPageOpts | null;
+  prev: IPageOpts | null;
+  to: IPageOpts | null;
+  beforeEach: (from: IPageOpts | null, to: IPageOpts | null, next: () => void) => void;
+  afterEach?: (from: IPageOpts | null, to: IPageOpts | null) => void;
 }

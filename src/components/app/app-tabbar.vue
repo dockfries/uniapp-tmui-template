@@ -35,7 +35,8 @@ const patchHeight = ref<number>(0);
 
 onMounted(() => {
   uni.hideTabBar();
-  const selector = uni.createSelectorQuery().in(this);
+  const instance = getCurrentInstance();
+  const selector = uni.createSelectorQuery().in(instance);
   const tabBar = selector.select(".app-tabbar");
   if (!tabBar) return;
   const setPatchHeight = ({ height }: any) => {
@@ -59,7 +60,7 @@ onMounted(() => {
       :key="item.route"
       class="_flex _flex-col _justify-center _items-center _flex-1"
       :class="[`${isActive(item) ? '_text-primary-500 dark:_text-white' : '_text-#636263'}`]"
-      @click="router.push({ path: item.route })"
+      @click="!isActive(item) && router.push({ path: item.route })"
     >
       <TmImage
         v-if="isURL(item.icon)"

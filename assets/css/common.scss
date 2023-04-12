@@ -2,3 +2,13 @@ view,
 text {
   transition: color 0.3s ease, background-color 0.3s ease;
 }
+
+.overflowMask,
+.overlay + .l-0.t-0,
+.overlay {
+  height: 100vh !important;
+}
+
+.l-0.t-0[style*="top"] {
+  top: 0 !important;
+}
