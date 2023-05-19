@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { request } from "@/request";
-import { useRouter } from "@/composable/router/useRouter";
 import { useMessage, useModal } from "@/composable/provider";
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
 import type { IAppScrollConfig, IAppScrollEvent } from "@/types";

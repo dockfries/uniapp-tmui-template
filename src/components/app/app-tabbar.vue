@@ -1,39 +1,41 @@
 <script setup lang="ts">
-import { useRoute } from "@/composable/router/useRoute";
-import { useRouter } from "@/composable/router/useRouter";
-import { mainPages, tabBarPages } from "@/router/loader";
 import type { IAppTabBarConfig, IAppTabBarItem } from "@/types";
+import { isTabBarPage } from "@/utils";
 
 interface IAppTabBarProps {
   config?: IAppTabBarConfig;
 }
 
-withDefaults(defineProps<IAppTabBarProps>(), {
-  config: () => {
-    return {
-      list:
-        mainPages
-          .filter((p) => p.path && tabBarPages.includes(p.path))
-          .map((t): IAppTabBarItem => {
-            return {
-              icon: t.meta?.icon,
-              text: t.meta?.title,
-              route: t.path || "",
-            };
-          }) || [],
-    };
-  },
-});
+const props = defineProps<IAppTabBarProps>();
 
-const route = useRoute();
 const router = useRouter();
 
-const isActive = (item: IAppTabBarItem) => route.path === item.route;
+const tabBarList = computed(() => {
+  return (
+    router.routes
+      .filter((p: any) => isTabBarPage(p.path))
+      .map((t: any): IAppTabBarItem => {
+        return {
+          icon: t.meta?.icon,
+          text: t.meta?.title,
+          route: t.path || "",
+        };
+      }) || []
+  );
+});
+
+const config = computed(() => {
+  return props.config || {};
+});
+
+const curKeepAliveRoute = computed(() => `/${getCurrentPages()[0].route}`);
+
 const isURL = (url: string) => /^(http)s?/.test(url);
 
 const patchHeight = ref<number>(0);
 
 onMounted(() => {
+  uni.$tm.tabBar.selectedColor = ""; // 兼容tmui深色切换
   uni.hideTabBar();
   const instance = getCurrentInstance();
   const selector = uni.createSelectorQuery().in(instance);
@@ -56,32 +58,36 @@ onMounted(() => {
     ]"
   >
     <view
-      v-for="item in config.list"
+      v-for="item in tabBarList"
       :key="item.route"
       class="_flex _flex-col _justify-center _items-center _flex-1"
-      :class="[`${isActive(item) ? '_text-primary-500 dark:_text-white' : '_text-#636263'}`]"
-      @click="!isActive(item) && router.push({ path: item.route })"
+      :class="[
+        `${
+          item.route === curKeepAliveRoute ? '_text-primary-500 dark:_text-white' : '_text-#636263'
+        }`,
+      ]"
+      @click="item.route !== curKeepAliveRoute && router.pushTab({ path: item.route })"
     >
       <TmImage
         v-if="isURL(item.icon)"
         :width="24"
         :height="24"
-        :src="isActive(item) ? item.activeIcon || item.icon : item.icon"
-        :_class="isActive(item) ? item.iconActiveClass : item.iconClass"
+        :src="item.route === curKeepAliveRoute ? item.activeIcon || item.icon : item.icon"
+        :_class="item.route === curKeepAliveRoute ? item.iconActiveClass : item.iconClass"
       />
 
       <view
         v-else
         class="_text-2xl"
         :class="[
-          `${isActive(item) ? item.activeIcon || item.icon : item.icon}`,
-          isActive(item) ? item.iconActiveClass : item.iconClass,
+          `${item.route === curKeepAliveRoute ? item.activeIcon || item.icon : item.icon}`,
+          item.route === curKeepAliveRoute ? item.iconActiveClass : item.iconClass,
         ]"
       />
 
       <view
         class="_mt-1.5 _text-sm _font-semibold dark:_font-normal"
-        :class="[isActive(item) ? item.textActiveClass : item.textClass]"
+        :class="[item.route === curKeepAliveRoute ? item.textActiveClass : item.textClass]"
         >{{ item.text }}</view
       >
     </view>

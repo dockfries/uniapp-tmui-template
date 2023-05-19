@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
-import { useRoute } from "@/composable/router/useRoute";
-import { isTabBarPage, mainPages } from "@/router/loader";
+
 import { tmConfig } from "@/config";
 import type { IAppTabBarConfig } from "@/types";
-import { useRouter } from "@/composable/router/useRouter";
+import { isTabBarPage } from "@/utils";
 
 interface IAppNavBarConfig {
   title: string;
@@ -27,9 +26,9 @@ const store = useTmpiniaStore();
 
 const pageTitle: string = route.meta?.title;
 
-const isHomePage = isTabBarPage(route.path) || route.path === mainPages[0].path;
+const isHomePage = isTabBarPage(route.path) || route.path === router.routes[0].path;
 const pageStackLength = getCurrentPages().length;
-const goHome = () => router.push({ path: mainPages[0].path });
+const goHome = () => router.push({ path: router.routes[0].path });
 const darkColor = props.config?.darkColor ?? (tmConfig.theme as Record<string, string>).black;
 </script>
 

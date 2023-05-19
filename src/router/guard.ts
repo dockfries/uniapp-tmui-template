@@ -1,10 +1,12 @@
-import { router } from ".";
+import type { Router } from "uni-mini-router";
 
-router.beforeEach((from, to, next) => {
-  console.log(from, to);
-  next();
-});
+export function createRouterGuard(router: Router) {
+  router.beforeEach((to, from, next) => {
+    console.log(to, from);
+    next();
+  });
 
-router.afterEach((from, to) => {
-  console.log(from, to);
-});
+  router.afterEach((to, from) => {
+    console.log(to, from);
+  });
+}

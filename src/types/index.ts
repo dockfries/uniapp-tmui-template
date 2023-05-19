@@ -1,4 +1,3 @@
-import type uniCrazyRouter from "uni-crazy-router";
 import type tmMessage from "@/tmui/components/tm-message/tm-message.vue";
 import type tmModal from "@/tmui/components/tm-modal/tm-modal.vue";
 import type { fetchConfig, fetchConfigSuccessType } from "@/tmui/tool/lib/interface";
@@ -11,45 +10,6 @@ export interface ITabBar {
 export interface ITabBarItem {
   pagePath: string;
   [k: string]: any;
-}
-
-export interface IPushReplaceOpts {
-  name?: string;
-  path?: string;
-  query?: Record<string, unknown>;
-}
-
-export interface IPageOpts extends IPushReplaceOpts {
-  meta?: Record<string, any>;
-  style?: Record<string, any>;
-}
-
-export interface ISubPackage {
-  root: string;
-  pages: IPageOpts[];
-}
-
-export interface IPagesJson {
-  pages: IPageOpts[];
-  subPackages?: ISubPackage[];
-  tabBar?: ITabBar;
-  [k: string]: any;
-}
-
-export interface ICrazyRoute extends Page.PageInstance {
-  $routeParams: Record<string, unknown>;
-  $passedParams: Record<string, unknown>;
-  $page: {
-    options?: Record<string, unknown>;
-    [k: string]: any;
-  };
-  options?: Record<string, unknown>;
-}
-
-export interface IRouterGuard {
-  beforeEach?: (to: Partial<IPageOpts>, from: Partial<IPageOpts>, next: () => void) => void;
-  afterEach?: (to: Partial<IPageOpts>, from: Partial<IPageOpts>) => void;
-  instance: uniCrazyRouter;
 }
 
 export interface IReqConfig extends fetchConfig {
@@ -151,20 +111,4 @@ export interface IAppProviders {
     instance?: Ref<AppModalInstance | null>;
     setConfig?: (props: IModalProps) => void;
   };
-}
-
-export interface IRouterStruct {
-  push(opts: IPushReplaceOpts, isReplace?: boolean): void;
-  replace(opts: IPushReplaceOpts): void;
-  back(): void;
-  beforeEach: (fn: IInnerRoute["beforeEach"]) => void;
-  afterEach: (fn: IInnerRoute["afterEach"]) => void;
-}
-
-export interface IInnerRoute {
-  from: IPageOpts | null;
-  prev: IPageOpts | null;
-  to: IPageOpts | null;
-  beforeEach: (from: IPageOpts | null, to: IPageOpts | null, next: () => void) => void;
-  afterEach?: (from: IPageOpts | null, to: IPageOpts | null) => void;
 }

@@ -3,8 +3,8 @@ import uni from "@dcloudio/vite-plugin-uni";
 import { defineConfig } from "vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import h5ProdEffectPlugin from "uni-vite-plugin-h5-prod-effect";
 import UnoCSS from "unocss/vite";
+import TransformPages from "uni-read-pages-vite";
 import tmuiCss from "./src/tmui/tool/vitePlugs/tmuiCss";
 
 export default defineConfig({
@@ -18,12 +18,20 @@ export default defineConfig({
     Components({ dirs: ["src/components", "src/tmui/components"] }),
     AutoImport({
       include: [/\.n?vue$/, /\.ts$/],
-      imports: ["vue", "pinia", "uni-app"],
+      imports: [
+        "vue",
+        "pinia",
+        "uni-app",
+        {
+          from: "uni-mini-router",
+          imports: ["useRouter", "useRoute"],
+        },
+      ],
       eslintrc: { enabled: true },
     }),
     uni(),
     tmuiCss(),
     UnoCSS(),
-    h5ProdEffectPlugin(),
   ],
+  define: { ROUTES: new TransformPages().routes },
 });
