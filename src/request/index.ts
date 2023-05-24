@@ -6,7 +6,7 @@ import type {
   fetchConfigMethod,
   fetchConfigSuccessType,
 } from "@/tmui/tool/lib/interface";
-import { useModal } from "@/composable/provider";
+import { useMessage } from "@/composable/provider";
 
 const requestInterceptors = (config: IReqConfig) => {
   if (!config) return true;
@@ -25,22 +25,29 @@ const responseInterceptors = (result: fetchConfigSuccessType, config: IReqConfig
     // token失效
     return;
   }
-  if (!config.errModal) return;
+  if (!config.errMessage) return;
 
-  useModal({
-    title: "请求异常",
-    content: `${data.msg}\n${config.url}`,
-    hideCancel: true,
-  }).value?.open();
+  console.log(`请求异常 - ${data.msg}\n${config.url}`);
+
+  const msg = useMessage({
+    model: "error",
+    text: "请求异常",
+  });
+
+  nextTick(() => msg.value?.show());
 };
 
 const errorInterceptors = (result: mixinErrorResult, config: IReqConfig) => {
-  if (!config.errModal) return;
-  useModal({
-    title: "请求异常",
-    content: `${result.statusCode} ${result.errMsg}\n${config.url}`,
-    hideCancel: true,
-  }).value?.open();
+  if (!config.errMessage) return;
+
+  console.log(`请求异常 - ${result.statusCode} ${result.errMsg}\n${config.url}`);
+
+  const msg = useMessage({
+    model: "error",
+    text: "请求异常",
+  });
+
+  nextTick(() => msg.value?.show());
 };
 
 export const request = <T = unknown>(
@@ -54,7 +61,7 @@ export const request = <T = unknown>(
     method,
     data,
     timeout: 15 * 1000,
-    errModal: true,
+    errMessage: true,
   };
   if (overrideConfig) merge(defaultConfig, overrideConfig);
   return new Promise<T>((resolve, reject) => {

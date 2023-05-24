@@ -9,14 +9,13 @@ const store = useTmpiniaStore();
 const router = useRouter();
 const goLogin = () => router.push({ name: "login" });
 
-const msg = useMessage();
+const msg = useMessage({
+  model: "error",
+  text: "不能为空",
+});
+
 const showMessage = () => {
-  msg.value?.hide();
-  msg.value?.show({
-    model: "error",
-    text: "不能为空",
-    mask: true,
-  });
+  msg.value?.show();
 };
 
 const modal = useModal({
@@ -30,6 +29,7 @@ const modal = useModal({
     console.log("cancel");
   },
 });
+
 const showModal = () => {
   modal.value?.open();
 };

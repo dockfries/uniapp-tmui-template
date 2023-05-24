@@ -1,6 +1,6 @@
 import type { IAppProviders } from "@/types";
 
 export const useAppStore = defineStore("app", () => {
-  const providers = reactive<IAppProviders>({ message: {}, modal: {} });
+  const providers = reactive<IAppProviders>({});
   return { providers };
 });

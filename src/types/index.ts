@@ -1,3 +1,4 @@
+import type { config as MessageConfig } from "@/tmui/components/tm-message/interface";
 import type tmMessage from "@/tmui/components/tm-message/tm-message.vue";
 import type tmModal from "@/tmui/components/tm-modal/tm-modal.vue";
 import type { fetchConfig, fetchConfigSuccessType } from "@/tmui/tool/lib/interface";
@@ -13,7 +14,7 @@ export interface ITabBarItem {
 }
 
 export interface IReqConfig extends fetchConfig {
-  errModal?: boolean;
+  errMessage?: boolean;
 }
 
 export interface ICommonResponse<T = Record<string, any>> {
@@ -76,39 +77,32 @@ export interface IAppTabBarConfig {
   list?: IAppTabBarItem[];
 }
 
-export interface IModalProps {
-  mask?: boolean;
-  border?: number;
-  width?: number;
-  height?: number;
-  round?: number;
-  duration?: number;
-  overlayClick?: boolean;
-  transparent?: boolean;
-  closeable?: boolean;
-  color?: string;
-  title?: string;
-  okText?: string;
-  okColor?: string;
-  okLinear?: string;
-  okLinearDeep?: string;
-  btnRound?: number;
-  hideCancel?: boolean;
-  content?: string;
-  disabled?: boolean;
-  titleStyle?: string;
-  zIndex?: number;
-  onOpen?: () => void;
-  onClose?: () => boolean | Promise<boolean>;
+export type ModalProps = Omit<AppModalInstance["$props"], "beforeClose" | "ok"> & {
   onConfirm?: () => void;
-  onCancel?: () => void;
-  onClick?: () => void;
+};
+
+export type MessageProps = AppMessageInstance["$props"] & MessageConfig;
+
+export interface IAppProvider<T> {
+  instance: T | null;
+  key: string;
+}
+
+export type AppModalProvider = IAppProvider<AppModalInstance> & ModalProps;
+
+export interface IModalInstConfig extends AppModalProvider {
+  open: () => void;
+  close: () => void;
+}
+
+export type AppMessageProvider = IAppProvider<AppMessageInstance> & MessageProps;
+
+export interface IMessageInstConfig extends AppMessageProvider {
+  show: () => void;
+  hide: () => void;
 }
 
 export interface IAppProviders {
-  message: { instance?: Ref<AppMessageInstance | null> };
-  modal: {
-    instance?: Ref<AppModalInstance | null>;
-    setConfig?: (props: IModalProps) => void;
-  };
+  message?: (props?: MessageProps) => IMessageInstConfig;
+  modal?: (props?: ModalProps) => IModalInstConfig;
 }
