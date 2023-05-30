@@ -7,3 +7,4 @@ components.d.ts
 package-lock.json
 dist
 node_modules
+uni_modules

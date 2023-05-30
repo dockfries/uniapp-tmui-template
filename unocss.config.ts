@@ -1,7 +1,7 @@
 import { defineConfig } from "unocss";
 import transformerDirectives from "@unocss/transformer-directives";
 import presetWeapp from "unocss-preset-weapp";
-import { transformerClass } from "unocss-preset-weapp/transformer";
+import { transformerAttributify, transformerClass } from "unocss-preset-weapp/transformer";
 import presetIcons from "@unocss/preset-icons";
 import { FileSystemIconLoader } from "@iconify/utils/lib/loader/node-loaders";
 import { tmConfig } from "./src/config/index"; // 兼容tmui组件库的color属性
@@ -19,7 +19,13 @@ export default defineConfig({
       },
     }),
   ],
-  transformers: [transformerDirectives(), transformerClass()],
+  transformers: [
+    transformerDirectives(),
+    transformerClass({}),
+    transformerAttributify({
+      classPrefix: "_",
+    }),
+  ],
   shortcuts: {
     "f-center": "_flex _justify-center _items-center",
   },

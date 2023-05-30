@@ -8,6 +8,7 @@ import TransformPages from "uni-read-pages-vite";
 import tmuiCss from "./src/tmui/tool/vitePlugs/tmuiCss";
 
 export default defineConfig({
+  transpileDependencies: ["z-paging"],
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),

@@ -4,7 +4,13 @@
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-tmui-starter",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "mp-alipay": {
+      "allowsBounceVertical": "NO"
+    },
+    "app-plus": {
+      "bounce": "none"
+    }
   },
   "pages": [
     {
@@ -39,7 +45,6 @@
     }
   ],
   "tabBar": {
-    "custom": true,
     "list": [
       {
         "pagePath": "pages/tabbar/index"

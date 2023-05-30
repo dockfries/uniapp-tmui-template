@@ -21,10 +21,12 @@ const requestInterceptors = (config: IReqConfig) => {
 const responseInterceptors = (result: fetchConfigSuccessType, config: IReqConfig) => {
   const data = result.data as ICommonResponse;
   if (data.code === 0) return data.data;
+
   if (data.code === -1) {
     // token失效
     return;
   }
+
   if (!config.errMessage) return;
 
   console.log(`请求异常 - ${data.msg}\n${config.url}`);
@@ -45,9 +47,14 @@ const errorInterceptors = (result: mixinErrorResult, config: IReqConfig) => {
   const msg = useMessage({
     model: "error",
     text: "请求异常",
+    duration: 1500,
   });
 
   nextTick(() => msg.value?.show());
+
+  setTimeout(() => {
+    msg.value?.destroy();
+  }, msg.value?.duration);
 };
 
 export const request = <T = unknown>(

@@ -67,6 +67,10 @@ function createMessage(props: MessageProps = {}) {
     hide() {
       return this.instance?.hide();
     },
+    destroy() {
+      const idx = messageInstances.value.findIndex((m) => m.key === key);
+      if (idx > -1) messageInstances.value.splice(idx, 1);
+    },
   };
   messageInstances.value.push(message);
   return message;
@@ -85,7 +89,7 @@ if (!appStore.providers.message) {
     v-for="modal in modalInstances"
     :key="modal.key"
     :ref="(el) => dynamicModalRef(el, modal.key)"
-    v-bind="omit(modal, 'key', 'onConfirm', 'onClose', 'open', 'close')"
+    v-bind="omit(modal, 'key', 'onConfirm', 'onClose', 'open', 'close', 'instance')"
     @before-close="modal.onClose"
     @ok="modal.onConfirm"
   />
@@ -93,6 +97,6 @@ if (!appStore.providers.message) {
     v-for="message in messageInstances"
     :key="message.key"
     :ref="(el) => dynamicMessageRef(el, message.key)"
-    v-bind="omit(message, 'key')"
+    v-bind="omit(message, 'key', 'instance')"
   />
 </template>

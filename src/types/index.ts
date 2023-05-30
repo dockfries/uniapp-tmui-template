@@ -28,18 +28,6 @@ export type mixinErrorResult = fetchConfigSuccessType & { errMsg: string };
 export type AppMessageInstance = InstanceType<typeof tmMessage>;
 export type AppModalInstance = InstanceType<typeof tmModal>;
 
-export interface IAppScrollConfig {
-  refresh?: boolean;
-  noMore?: boolean;
-  noData?: boolean;
-  error?: boolean;
-}
-
-export interface IAppScrollEvent {
-  loadmore: boolean;
-  stop: () => void;
-}
-
 export interface IResponsePagedData<T = any> {
   data: T;
   total: number;
@@ -77,6 +65,10 @@ export interface IAppTabBarConfig {
   list?: IAppTabBarItem[];
 }
 
+export interface IAppNavBarConfig {
+  title: string;
+}
+
 export type ModalProps = Omit<AppModalInstance["$props"], "beforeClose" | "ok"> & {
   onConfirm?: () => void;
 };
@@ -100,6 +92,7 @@ export type AppMessageProvider = IAppProvider<AppMessageInstance> & MessageProps
 export interface IMessageInstConfig extends AppMessageProvider {
   show: () => void;
   hide: () => void;
+  destroy: () => void;
 }
 
 export interface IAppProviders {

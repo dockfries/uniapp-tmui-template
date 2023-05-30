@@ -1,64 +1,42 @@
 <script setup lang="ts">
-import DScroll from "@dimple-smile/uni-scroll";
-import type { IAppScrollConfig, IAppScrollEvent } from "@/types";
+import { useAppStore } from "@/store/useAppStore";
 
-interface IAppScrollProps {
-  config?: IAppScrollConfig;
-}
-
-withDefaults(defineProps<IAppScrollProps>(), {
-  config() {
-    return { refresh: true };
+defineProps({
+  modelValue: {
+    type: Object,
   },
 });
 
-const emit = defineEmits(["up", "down"]);
+const emit = defineEmits(["query", "update:modelValue"]);
 
-const onFetchData = (ev: IAppScrollEvent) => {
-  emit(ev.loadmore ? "up" : "down", ev);
+const emitQuery = (...args: any[]) => {
+  emit("query", ...args);
 };
 
-/* #ifdef H5 */
-const dScrollPatch = ref<{ $el: HTMLDivElement } | null>(null);
-onMounted(() => {
-  const patchScrollDom = dScrollPatch.value?.$el.children[0].children[0].children[0].children;
-  if (!patchScrollDom) return;
-  patchScrollDom[0].appendChild(patchScrollDom[1]);
-});
-/* #endif  */
+const route = useRoute();
+
+const pagingRef = ref<any>(null);
+
+onShow(() => useAppStore().pagingRef.set(route.path!, pagingRef));
 </script>
 
 <template>
-  <DScroll
-    ref="dScrollPatch"
-    :refresh-disabled="config.refresh === false"
-    :no-more="config.noMore"
-    :no-data="config.noData"
-    :error="config.error"
-    background="transparent"
-    refresher-background="transparent"
-    @fetch="onFetchData"
+  <z-paging
+    ref="pagingRef"
+    :min-delay="150"
+    :model-value="modelValue"
+    @update:model-value="$emit('update:modelValue', $event)"
+    @query="emitQuery"
   >
-    <slot />
-    <template #noData>
-      <TmResult :show-btn="false" />
+    <template #top>
+      <slot name="top"></slot>
     </template>
-    <template #loadmorer="{ loading }">
-      <TmSpin :load="loading" />
+    <slot> </slot>
+    <template #cell>
+      <slot name="cell"></slot>
     </template>
-    <template #noMore>
-      <view class="_p-4">
-        <TmDivider label="没有更多数据了" :font-size="28" />
-      </view>
+    <template #bottom>
+      <slot name="bottom"></slot>
     </template>
-    <template #error>
-      <TmResult
-        :show-btn="false"
-        color="error"
-        status="error"
-        title="服务异常"
-        sub-title="请稍后刷新重试"
-      />
-    </template>
-  </DScroll>
+  </z-paging>
 </template>

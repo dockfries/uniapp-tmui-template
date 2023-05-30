@@ -2,10 +2,11 @@
 import { request } from "@/request";
 import { useMessage, useModal } from "@/composable/provider";
 import { useTmpiniaStore } from "@/tmui/tool/lib/tmpinia";
-import type { IAppScrollConfig, IAppScrollEvent } from "@/types";
+import { usePage } from "@/composable/request/usePage";
 
 const store = useTmpiniaStore();
 
+const route = useRoute();
 const router = useRouter();
 const goLogin = () => router.push({ name: "login" });
 
@@ -34,30 +35,27 @@ const showModal = () => {
   modal.value?.open();
 };
 
-const scrollConfig = reactive<IAppScrollConfig>({
-  // refresh: false,
-});
+const myPagingData = ref([]);
 
-const down = async (ev: IAppScrollEvent) => {
+const query = async (pageNo: number, pageSize: number) => {
+  const paging = usePage(route);
   try {
-    await request<string>("ping", "GET");
-  } finally {
-    ev.stop();
-    scrollConfig.noMore = true;
+    const data = await request<string>("ping", "GET", { pageNo, pageSize });
+    paging.value.complete([data]);
+  } catch (err) {
+    paging.value.complete(false);
   }
 };
 </script>
 
 <template>
-  <AppContainer>
+  <AppContainer v-model="myPagingData" @query="query">
     <view class="_m-4">
       <view class="f-center">
         <view class="i-icon-chip _text-warning-500 _text-2xl _mr-1" />
         <text class="_text-xl _text-primary-500">兼容组件库所以类名前缀_</text>
       </view>
-      <view
-        class="_flex _flex-wrap _gap-4 _mt-4 _p-4 _shadow _bg-white _rounded-md dark:_bg-dark-100"
-      >
+      <view flex="~ wrap" class="_gap-4 _mt-4 _p-4 _shadow _bg-white _rounded-md dark:_bg-dark-100">
         <TmButton @click="goLogin">跳转</TmButton>
         <TmButton @click="showMessage">组件消息框</TmButton>
         <TmButton @click="showModal">模态框</TmButton>
@@ -68,12 +66,13 @@ const down = async (ev: IAppScrollEvent) => {
         </template>
       </TmCell>
     </view>
-    <AppScroll :config="scrollConfig" @down="down" @up="down">
-      <view class="dark:_text-light-900">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. A nulla quasi, repudiandae illo
-        nihil, harum error voluptas maxime quia aliquid placeat? Recusandae eos, ducimus sapiente
-        harum aliquam et labore molestias.
-      </view>
-    </AppScroll>
+    <view class="dark:_text-light-900">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. A nulla quasi, repudiandae illo
+      nihil, harum error voluptas maxime quia aliquid placeat? Recusandae eos, ducimus sapiente
+      harum aliquam et labore molestias.
+    </view>
+    <view v-for="(item, idx) in myPagingData" :key="idx">
+      {{ item }}
+    </view>
   </AppContainer>
 </template>

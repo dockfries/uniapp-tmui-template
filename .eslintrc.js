@@ -10,11 +10,12 @@ module.exports = {
     "no-console": "off",
     "antfu/if-newline": "off",
     "vue/comment-directive": "off",
-    "vue/component-name-in-template-casing": [
-      "error",
-      "PascalCase",
-      { registeredComponentsOnly: false },
-    ],
+    // 不兼容z-paging
+    // "vue/component-name-in-template-casing": [
+    //   "error",
+    //   "PascalCase",
+    //   { registeredComponentsOnly: true },
+    // ],
   },
   globals: { uni: true },
 };
