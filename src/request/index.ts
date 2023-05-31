@@ -1,12 +1,26 @@
 import { merge } from "lodash-es";
 import { useUserStore } from "@/store/useUserStore";
-import type { ICommonResponse, IReqConfig, mixinErrorResult } from "@/types";
+import type { ICommonResponse, IMessageInstConfig, IReqConfig, mixinErrorResult } from "@/types";
 import type {
   fetchConfig,
   fetchConfigMethod,
   fetchConfigSuccessType,
 } from "@/tmui/tool/lib/interface";
 import { useMessage } from "@/composable/provider";
+
+// 主要是微信小程序他nextTick还是拿不到instance, h5没问题
+const errorRequestMessage = (msg: ComputedRef<IMessageInstConfig | undefined>) => {
+  nextTick(() => {
+    if (!msg.value?.instance) {
+      setTimeout(() => errorRequestMessage(msg), 60);
+    } else {
+      msg.value?.show();
+      setTimeout(() => {
+        msg.value?.destroy();
+      }, msg.value?.duration || 1500);
+    }
+  });
+};
 
 const requestInterceptors = (config: IReqConfig) => {
   if (!config) return true;
@@ -36,7 +50,7 @@ const responseInterceptors = (result: fetchConfigSuccessType, config: IReqConfig
     text: "请求异常",
   });
 
-  nextTick(() => msg.value?.show());
+  errorRequestMessage(msg);
 };
 
 const errorInterceptors = (result: mixinErrorResult, config: IReqConfig) => {
@@ -50,11 +64,7 @@ const errorInterceptors = (result: mixinErrorResult, config: IReqConfig) => {
     duration: 1500,
   });
 
-  nextTick(() => msg.value?.show());
-
-  setTimeout(() => {
-    msg.value?.destroy();
-  }, msg.value?.duration);
+  errorRequestMessage(msg);
 };
 
 export const request = <T = unknown>(

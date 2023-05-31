@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import { useAppStore } from "@/store/useAppStore";
 
-defineProps({
-  modelValue: {
-    type: Object,
-  },
-});
+defineProps({ modelValue: { type: Object } });
 
 const emit = defineEmits(["query", "update:modelValue"]);
-
-const emitQuery = (...args: any[]) => {
-  emit("query", ...args);
-};
 
 const route = useRoute();
 
 const pagingRef = ref<any>(null);
+
+const emitQuery = (...args: any[]) => emit("query", ...args);
 
 onShow(() => useAppStore().pagingRef.set(route.path!, pagingRef));
 </script>
@@ -25,6 +19,8 @@ onShow(() => useAppStore().pagingRef.set(route.path!, pagingRef));
     ref="pagingRef"
     :min-delay="150"
     :model-value="modelValue"
+    :lower-threshold="150"
+    v-bind="$attrs"
     @update:model-value="$emit('update:modelValue', $event)"
     @query="emitQuery"
   >

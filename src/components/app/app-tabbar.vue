@@ -50,12 +50,10 @@ onMounted(() => {
 
 <template>
   <view
-    class="_bg-white dark:_bg-dark-100 _fixed _left-0 _right-0 _bottom-0 _flex _p-2 _z-100 _shadow dark:_shadow-none app-tabbar"
-    :class="[
-      config.background ? `_bg-${config.background}` : '',
-      config.darkBackground ? `dark:_bg-${config.darkBackground}` : '',
-      config._class,
-    ]"
+    class="dark:_bg-dark-100 _fixed _left-0 _right-0 _bottom-0 _flex _z-100 _shadow dark:_shadow-none app-tabbar"
+    :class="[config._class]"
+    bg="white"
+    p="2"
   >
     <view
       v-for="item in tabBarList"

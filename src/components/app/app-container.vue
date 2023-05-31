@@ -11,7 +11,7 @@ interface IAppContainerProps {
     color?: string;
     darkColor?: string;
     nav?: IAppNavBarConfig | false;
-    tab?: IAppTabBarConfig;
+    tab?: IAppTabBarConfig | false;
   };
 }
 
@@ -41,6 +41,7 @@ const emitQuery = (...args: any[]) => {
       :dark-color="darkColor"
     >
       <AppScroll
+        v-if="modelValue !== undefined"
         :model-value="modelValue"
         @update:model-value="$emit('update:modelValue', $event)"
         @query="emitQuery"
@@ -60,10 +61,23 @@ const emitQuery = (...args: any[]) => {
         </template>
         <template #bottom>
           <slot name="bottom">
-            <AppTabbar v-if="isHomePage" :config="config?.tab" />
+            <AppTabbar v-if="config?.tab !== false && isHomePage" :config="config?.tab" />
           </slot>
         </template>
       </AppScroll>
+      <template v-else>
+        <slot name="top">
+          <AppNavbar
+            v-if="config?.nav !== false"
+            :is-home-page="isHomePage"
+            :config="config?.nav"
+          />
+        </slot>
+        <slot />
+        <slot name="bottom">
+          <AppTabbar v-if="config?.tab !== false && isHomePage" :config="config?.tab" />
+        </slot>
+      </template>
       <AppProvider />
     </TmApp>
     <!-- #ifdef MP -->

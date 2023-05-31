@@ -60,8 +60,6 @@ export interface IAppTabBarItem {
 
 export interface IAppTabBarConfig {
   _class?: string;
-  background?: string;
-  darkBackground?: string;
   list?: IAppTabBarItem[];
 }
 
