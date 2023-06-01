@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IAppNavBarConfig } from "@/types";
+import { isTabBarPage } from "@/utils";
 
 interface IAppNavBarProps {
   isHomePage: boolean;
@@ -14,7 +15,10 @@ const pageTitle: string = route.meta?.title;
 
 const pageStackLength = getCurrentPages().length;
 
-const goHome = () => router.push({ path: router.routes[0].path });
+const goHome = () => {
+  const path = router.routes[0].path;
+  isTabBarPage(path) ? router.pushTab({ path }) : router.push({ path });
+};
 </script>
 
 <template>

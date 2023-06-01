@@ -19,7 +19,6 @@ onShow(() => useAppStore().pagingRef.set(route.path!, pagingRef));
     ref="pagingRef"
     :min-delay="150"
     :model-value="modelValue"
-    :lower-threshold="150"
     v-bind="$attrs"
     @update:model-value="$emit('update:modelValue', $event)"
     @query="emitQuery"
