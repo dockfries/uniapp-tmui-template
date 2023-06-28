@@ -4,11 +4,9 @@ import { defineConfig } from "vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import UnoCSS from "unocss/vite";
-import TransformPages from "uni-read-pages-vite";
 import tmuiCss from "./src/tmui/tool/vitePlugs/tmuiCss";
 
 export default defineConfig({
-  transpileDependencies: ["z-paging"],
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
@@ -34,5 +32,4 @@ export default defineConfig({
     tmuiCss(),
     UnoCSS(),
   ],
-  define: { ROUTES: new TransformPages().routes },
 });
