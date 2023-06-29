@@ -18,9 +18,12 @@ interface IAppContainerProps {
 const props = defineProps<IAppContainerProps>();
 
 const emit = defineEmits(["query", "update:modelValue"]);
-const route = useRoute();
 const router = useRouter();
 const store = useTmpiniaStore();
+
+const currentPages = getCurrentPages();
+
+const route = { path: `/${currentPages[currentPages.length - 1].route}` };
 
 const isHomePage = isTabBarPage(route.path) || route.path === router.routes[0].path;
 const darkColor = props.config?.darkColor ?? (tmConfig.theme as Record<string, string>).black;
@@ -53,6 +56,7 @@ const emitQuery = (...args: any[]) => {
               :is-home-page="isHomePage"
               :config="config?.nav"
             />
+            <view v-else class="_w-full" style="height: var(--status-bar-height)"></view>
           </slot>
         </template>
         <slot />
@@ -72,6 +76,7 @@ const emitQuery = (...args: any[]) => {
             :is-home-page="isHomePage"
             :config="config?.nav"
           />
+          <view v-else class="_w-full" style="height: var(--status-bar-height)"></view>
         </slot>
         <slot />
         <slot name="bottom">

@@ -6,6 +6,8 @@ import presetIcons from "@unocss/preset-icons";
 import { FileSystemIconLoader } from "@iconify/utils/lib/loader/node-loaders";
 import { tmConfig } from "./src/config/index"; // 兼容tmui组件库的color属性
 
+const svgPatchFillReg = /fill="#\w{6}"/g;
+
 export default defineConfig({
   include: [/\.n?vue$/, "./src/pages.json"],
   exclude: ["node_modules", ".git", ".husky", ".vscode", "build", "dist", "public", "src/types"],
@@ -13,9 +15,14 @@ export default defineConfig({
     presetWeapp({ prefix: "_", whRpx: false }),
     presetIcons({
       collections: {
-        icon: FileSystemIconLoader("./assets/icons", (svg) =>
-          svg.replace(/fill="#\w{6}"/g, `fill="currentColor"`)
-        ),
+        icon: FileSystemIconLoader("./assets/icons", (svg) => {
+          // 仅单色图标自动修改为currentColor, 多色图标需要自行处理
+          const matches = svg.match(svgPatchFillReg);
+          if (matches?.every((match) => match === matches[0])) {
+            return svg.replace(svgPatchFillReg, `fill="currentColor"`);
+          }
+          return svg;
+        }),
       },
     }),
   ],

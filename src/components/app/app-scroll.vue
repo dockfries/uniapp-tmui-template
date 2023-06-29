@@ -11,7 +11,12 @@ const pagingRef = ref<any>(null);
 
 const emitQuery = (...args: any[]) => emit("query", ...args);
 
-onShow(() => useAppStore().pagingRef.set(route.path!, pagingRef));
+onShow(async () => {
+  if (!pagingRef.value) await nextTick();
+
+  useAppStore().pagingRef.set(route.path!, pagingRef);
+  route.aliasPath && useAppStore().pagingRef.set(route.aliasPath, pagingRef);
+});
 </script>
 
 <template>

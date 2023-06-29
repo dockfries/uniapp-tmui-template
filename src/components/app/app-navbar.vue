@@ -11,7 +11,9 @@ defineProps<IAppNavBarProps>();
 const route = useRoute();
 const router = useRouter();
 
-const pageTitle: string = route.meta?.title;
+const pageTitle = computed<string>(() => {
+  return route.meta?.title || "";
+});
 
 const pageStackLength = getCurrentPages().length;
 

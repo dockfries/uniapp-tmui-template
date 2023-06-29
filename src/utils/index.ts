@@ -1,5 +1,8 @@
+import router from "@/router";
+
 export const isTabBarPage = (path?: string) => {
   if (!path) return;
+  if (router.routes[0] && router.routes[0].aliasPath === path) return true;
   return (uni.$tm.tabBar?.list ?? []).some((t) => `/${t.pagePath}` === path);
 };
 
