@@ -28,7 +28,9 @@ const config = computed(() => {
   return props.config || {};
 });
 
-const curKeepAliveRoute = computed(() => `/${getCurrentPages()[0].route}`);
+const pages = getCurrentPages();
+
+const curKeepAliveRoute = computed(() => `/${pages[pages.length - 1].route}`);
 
 const isURL = (url: string) => /^(http)s?/.test(url);
 

@@ -76,12 +76,10 @@ function createMessage(props: MessageProps = {}) {
   return message;
 }
 
-if (!appStore.providers.modal) {
+onShow(() => {
   appStore.providers.modal = createModal;
-}
-if (!appStore.providers.message) {
   appStore.providers.message = createMessage;
-}
+});
 </script>
 
 <template>
