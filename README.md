@@ -1,5 +1,7 @@
 ## 起步
 
+项目缺少 uni 插件市场的 z-paging 组件, 首次启动项目请执行完下述代码后手动引入。
+
 ```sh
 npm i # 不支持pnpm/yarn, 否则多平台兼容有问题
 npm -g install tmui-cli # 如果没有tmui脚手架就需要这一步

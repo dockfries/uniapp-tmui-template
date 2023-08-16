@@ -36,44 +36,84 @@ const dynamicMessageRef = (instance: unknown, key: string) => {
 };
 
 function createModal(props: ModalProps = {}) {
-  const key = `modal-${uni.$tm.u.getUid(8)}`;
+  let isDestroyed = false;
+  const key = `modal-${uni.$tm.u.getUid(1, 8)}`;
   const modal: IModalInstConfig = {
     ...props,
     key,
     instance: null,
     open() {
-      return this.instance?.open();
+      if (isDestroyed) return;
+      if (this.instance) return this.instance.open();
+      setTimeout(() => this.open(), 60);
     },
     close() {
-      return this.instance?.close();
+      if (isDestroyed) return;
+      if (this.instance) return this.instance.close();
+      setTimeout(() => this.close(), 60);
     },
-    // destroy() {
-    //   // close后数组中移除自身
-    // },
+    destroy() {
+      if (isDestroyed) return;
+      const idx = modalInstances.value.findIndex((item) => item.key === key);
+      if (idx > -1) {
+        isDestroyed = true;
+        modalInstances.value.splice(idx, 1);
+      }
+    },
   };
   modalInstances.value.push(modal);
+  console.log(modalInstances);
   return modal;
 }
 
 function createMessage(props: MessageProps = {}) {
-  const key = `message-${uni.$tm.u.getUid(8)}`;
+  let isDestroyed = false;
+  const key = `message-${uni.$tm.u.getUid(1, 8)}`;
   const message: IMessageInstConfig = {
     ...props,
     key,
     instance: null,
     show() {
-      return this.instance?.show(props);
+      if (isDestroyed) return;
+      if (this.instance) return this.instance.show(props);
+      setTimeout(() => this.show(), 60);
     },
     hide() {
-      return this.instance?.hide();
+      if (isDestroyed) return;
+      if (this.instance) return this.instance.hide();
+      setTimeout(() => this.hide(), 60);
     },
     destroy() {
+      if (isDestroyed) return;
       const idx = messageInstances.value.findIndex((m) => m.key === key);
-      if (idx > -1) messageInstances.value.splice(idx, 1);
+      if (idx > -1) {
+        isDestroyed = true;
+        messageInstances.value.splice(idx, 1);
+      }
     },
   };
   messageInstances.value.push(message);
   return message;
+}
+
+async function destroyAfterCancel(modal: IModalInstConfig) {
+  const res = await modal.onCancel?.();
+  if (res !== false) {
+    setTimeout(() => {
+      modal.destroy();
+    }, 300);
+  }
+  return res;
+}
+
+async function destroyAfterConfirm(modal: IModalInstConfig) {
+  const res = await modal.onConfirm?.();
+  if (res !== false) {
+    setTimeout(() => {
+      modal.destroy();
+    }, 300);
+  }
+  return res;
 }
 
 onShow(() => {
@@ -83,13 +123,13 @@ onShow(() => {
 </script>
 
 <template>
-  <TmModal
+  <CommonModal
     v-for="modal in modalInstances"
     :key="modal.key"
     :ref="(el) => dynamicModalRef(el, modal.key)"
-    v-bind="omit(modal, 'key', 'onConfirm', 'onClose', 'open', 'close', 'instance')"
-    @before-close="modal.onClose"
-    @ok="modal.onConfirm"
+    v-bind="omit(modal, 'key', 'onConfirm', 'onCancel', 'open', 'close', 'instance')"
+    :on-cancel="() => destroyAfterCancel(modal)"
+    :on-confirm="() => destroyAfterConfirm(modal)"
   />
   <TmMessage
     v-for="message in messageInstances"

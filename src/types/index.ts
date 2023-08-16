@@ -1,6 +1,6 @@
+import type CommonModal from "@/components/modal/common-modal.vue";
 import type { config as MessageConfig } from "@/tmui/components/tm-message/interface";
 import type tmMessage from "@/tmui/components/tm-message/tm-message.vue";
-import type tmModal from "@/tmui/components/tm-modal/tm-modal.vue";
 import type { fetchConfig, fetchConfigSuccessType } from "@/tmui/tool/lib/interface";
 
 export interface ITabBar {
@@ -26,7 +26,7 @@ export interface ICommonResponse<T = Record<string, any>> {
 export type mixinErrorResult = fetchConfigSuccessType & { errMsg: string };
 
 export type AppMessageInstance = InstanceType<typeof tmMessage>;
-export type AppModalInstance = InstanceType<typeof tmModal>;
+export type AppModalInstance = InstanceType<typeof CommonModal>;
 
 export interface IResponsePagedData<T = any> {
   data: T;
@@ -64,18 +64,18 @@ export interface IAppTabBarConfig {
 }
 
 export interface IAppNavBarConfig {
-  title: string;
+  title?: string;
+  shadow?: number;
 }
 
-export type ModalProps = Omit<AppModalInstance["$props"], "beforeClose" | "ok"> & {
-  onConfirm?: () => void;
-};
+export type ModalProps = AppModalInstance["$props"];
 
 export type MessageProps = AppMessageInstance["$props"] & MessageConfig;
 
 export interface IAppProvider<T> {
   instance: T | null;
   key: string;
+  destroy: () => void;
 }
 
 export type AppModalProvider = IAppProvider<AppModalInstance> & ModalProps;
