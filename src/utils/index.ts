@@ -20,3 +20,25 @@ export const watchOnce = (
     options
   );
 };
+
+export function getBoundingClientRect(dom: string, inThis = false) {
+  return new Promise<any>((resolve) => {
+    const selector = inThis
+      ? uni.createSelectorQuery().in(getCurrentInstance())
+      : uni.createSelectorQuery();
+    return selector.select(dom).boundingClientRect(resolve).exec();
+  });
+}
+
+export async function navigateToDom(root: string, element: string, patchNavHeight = 0) {
+  const rootDom = await getBoundingClientRect(root);
+  const elementDom = await getBoundingClientRect(element);
+  return new Promise((resolve) => {
+    uni.pageScrollTo({
+      scrollTop: elementDom.top - rootDom.top - patchNavHeight,
+      complete() {
+        resolve(null);
+      },
+    });
+  });
+}
