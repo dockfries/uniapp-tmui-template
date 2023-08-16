@@ -27,7 +27,7 @@ const requestInterceptors = (config: IReqConfig) => {
   const { token } = useUserStore();
   if (token) {
     if (!config.header) config.header = {};
-    (config.header as Record<string, unknown>).token = token;
+    (config.header as Record<string, any>).Authorization = `Bearer ${token}`;
   }
   return true;
 };
@@ -36,9 +36,14 @@ const responseInterceptors = (result: fetchConfigSuccessType, config: IReqConfig
   const data = result.data as ICommonResponse;
   if (data.code === 0) return data.data;
 
-  if (data.code === -1) {
-    // token失效
-    return;
+  if (data.code === 401) {
+    const msg = useMessage({ model: "info", text: "请重新登录" });
+    errorRequestMessage(msg);
+
+    const { logout } = useUserStore();
+    logout();
+
+    return { err: data.msg };
   }
 
   if (!config.errMessage) return;
@@ -47,10 +52,13 @@ const responseInterceptors = (result: fetchConfigSuccessType, config: IReqConfig
 
   const msg = useMessage({
     model: "error",
-    text: "请求异常",
+    text: data.msg || "请求异常",
+    lines: 5,
   });
 
   errorRequestMessage(msg);
+
+  return { err: data.msg };
 };
 
 const errorInterceptors = (result: mixinErrorResult, config: IReqConfig) => {
@@ -62,6 +70,7 @@ const errorInterceptors = (result: mixinErrorResult, config: IReqConfig) => {
     model: "error",
     text: "请求异常",
     duration: 1500,
+    lines: 5,
   });
 
   errorRequestMessage(msg);
@@ -93,11 +102,11 @@ export const request = <T = unknown>(
           }
         }
       )
-      .then((res) => {
-        if (Object.hasOwn(res, "errMsg")) reject(res);
-        else resolve(res as unknown as T);
+      .then((res: any) => {
+        if (res.err) return reject(res.err);
+        resolve(res as unknown as T);
       })
-      .catch((err) => reject(err));
+      .catch(reject);
   });
 };
 
