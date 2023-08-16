@@ -15,7 +15,7 @@ export default defineConfig({
     presetWeapp({ prefix: "_", whRpx: false }),
     presetIcons({
       collections: {
-        icon: FileSystemIconLoader("./assets/icons", (svg) => {
+        icon: FileSystemIconLoader("./src/assets/icons", (svg) => {
           // 仅单色图标自动修改为currentColor, 多色图标需要自行处理
           const matches = svg.match(svgPatchFillReg);
           if (matches?.every((match) => match === matches[0])) {
@@ -39,15 +39,21 @@ export default defineConfig({
   theme: {
     colors: {
       primary: {
+        600: "#5D55F0",
         500: tmConfig.theme.primary,
+        200: "#AFC6F8",
         50: "#EBF1FD",
       },
       success: {
         500: tmConfig.theme.success,
-        50: "#E8F6ED",
+        200: "#BAE5C8",
+        50: "#EBF1FD",
       },
       warning: {
+        700: "#B6760E",
         500: tmConfig.theme.warning,
+        300: "#FFD38B",
+        200: "#FFDB9E",
         50: "#FFF0D8",
       },
       error: {

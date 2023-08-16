@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-@import "../assets/css/common.scss";
+@import "./assets/css/common.scss";
 
 /* #ifdef APP-PLUS-NVUE */
 @import "./tmui/scss/nvue.css";
