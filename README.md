@@ -1,14 +1,14 @@
 ## 起步
 
+> 请全局替换 pkg-placeholder 占位符以使用此模板。
+
 项目缺少 uni 插件市场的 z-paging 组件, 首次启动项目请执行完下述代码后手动引入。
 
 ```sh
 npm i # 不支持pnpm/yarn, 否则多平台兼容有问题
-npm -g install tmui-cli # 如果没有tmui脚手架就需要这一步
-tmui rcli # 更新tmui
+npx tmui rcli # 更新tmui，有可能卡死，看src/tmui出来就强制结束执行
 npx @dcloudio/uvm alpha # 更新uniapp sdk, 会覆盖为低版本vite
-npm install vite@latest # 更新vite
-rm -rf ./src/tmui/components/tm-keyborad # 作者错别字未来将移除
+npm install vite pinia@2.0.36 # 更新vite,再安装一遍指定版本的pinia
 ```
 
 ## 注意

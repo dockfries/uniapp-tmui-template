@@ -1,18 +1,38 @@
 import { defineConfig } from "unocss";
 import transformerDirectives from "@unocss/transformer-directives";
 import presetWeapp from "unocss-preset-weapp";
-import { transformerAttributify, transformerClass } from "unocss-preset-weapp/transformer";
+import {
+  extractorAttributify,
+  transformerAttributify,
+  transformerClass,
+} from "unocss-preset-weapp/transformer";
 import presetIcons from "@unocss/preset-icons";
 import { FileSystemIconLoader } from "@iconify/utils/lib/loader/node-loaders";
 import { tmConfig } from "./src/config/index"; // 兼容tmui组件库的color属性
 
 const svgPatchFillReg = /fill="#\w{6}"/g;
 
+const { presetWeappAttributify } = extractorAttributify();
+
 export default defineConfig({
-  include: [/\.n?vue$/, "./src/pages.json"],
-  exclude: ["node_modules", ".git", ".husky", ".vscode", "build", "dist", "public", "src/types"],
+  content: {
+    pipeline: {
+      include: [/\.n?vue$/, "./src/pages.json"],
+      exclude: [
+        "node_modules",
+        ".git",
+        ".husky",
+        ".vscode",
+        "build",
+        "dist",
+        "public",
+        "src/types",
+      ],
+    },
+  },
   presets: [
     presetWeapp({ prefix: "_", whRpx: false }),
+    presetWeappAttributify(),
     presetIcons({
       collections: {
         icon: FileSystemIconLoader("./src/assets/icons", (svg) => {

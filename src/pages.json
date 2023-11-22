@@ -3,7 +3,7 @@
     "backgroundColor": "#FFFFFF",
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-tmui-starter",
+    "navigationBarTitleText": "pkg-placeholder",
     "navigationStyle": "custom",
     "mp-alipay": {
       "allowsBounceVertical": "NO"
